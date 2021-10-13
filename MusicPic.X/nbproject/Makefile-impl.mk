@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=UBMP4-Intro-1-Input-Output.X
+PROJECTNAME=MusicPic.X
 
 # Active Configuration
 DEFAULTCONF=free
