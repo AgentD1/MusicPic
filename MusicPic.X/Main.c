@@ -9,6 +9,12 @@
 // TODO Set linker ROM ranges to 'default,-0-7FF' under "Memory model" pull-down.
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
 
+// https://exploreembedded.com/wiki/PIC16f877a_Timer
+#define SBIT_PS1  5
+#define SBIT_PS0  4
+
+#define TIMER1_PRESCALER 8
+
 struct Note {
     unsigned long period;
     unsigned long time;
@@ -18,6 +24,8 @@ typedef struct Note Note;
 
 const int NOTES_LENGTH = 3;
 
+bool timerHit = false;
+
 const Note notes[] = {
     {.period = NOTE_C4, .time = 1000000},
     {.period = NOTE_A4, .time = 1000000},
@@ -25,21 +33,9 @@ const Note notes[] = {
 };
 
 void delay_us(unsigned int us) {
-    while(us > 10000) {
-        __delay_us(10000);
-        us -= 10000;
-    }
-    while(us > 1000) {
-        __delay_us(1000);
-        us -= 1000;
-    }
-    while(us > 100) {
-        __delay_us(100);
-        us -= 100;
-    }
-    while(us > 10) {
-        __delay_us(10);
-        us -= 10;
+    while(us > 0) {
+       us-=10;
+        __delay_us(9);
     }
 }
 
@@ -52,7 +48,7 @@ int main(void) {
     while(1) {
         // Change pitch
         
-        if(SW2 == 0) {
+        /*if(SW2 == 0) {
             for(int i = 0; i < NOTES_LENGTH; i++) {
                 
                 for(unsigned long repeats = notes[i].time / notes[i].period; repeats != 0; repeats--) {
@@ -63,9 +59,12 @@ int main(void) {
                     RESET();
                 }
             }
+        }*/
+        
+        for(unsigned long repeats = 100; repeats != 0; repeats--) {
+            BEEPER = !BEEPER;
+            __delay_us(NOTE_C4);
         }
-        
-        
         
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
