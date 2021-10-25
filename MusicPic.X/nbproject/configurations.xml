@@ -17,6 +17,7 @@
                    projectFiles="true">
       <itemPath>UBMP4.c</itemPath>
       <itemPath>Main.c</itemPath>
+      <itemPath>timing_function_is_assembly.s</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

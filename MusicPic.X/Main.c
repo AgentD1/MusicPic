@@ -24,9 +24,9 @@ typedef struct Note Note;
 
 const int NOTES_LENGTH = 3;
 
-bool timerHit = false;
+extern unsigned char timerHit = 0;
 
-unsigned int count = 0;
+extern unsigned char count = 0;
 
 const Note notes[] = {
     {.period = NOTE_C4, .time = 1000000},
@@ -34,7 +34,11 @@ const Note notes[] = {
     {.period = NOTE_B4, .time = 500000}
 };
 
-void __interrupt() timer_isr() {  
+extern void timer_function(void);
+
+void __interrupt() timer_isr() {
+    timer_function();
+    return;
     if(TMR0IF==1 && !timerHit) { // Timer flag has been triggered due to timer overflow
         TMR0 = 206;     //Load the timer Value
         TMR0IF=0;       // Clear timer interrupt flag
@@ -45,7 +49,7 @@ void __interrupt() timer_isr() {
 void delay_us(unsigned int us) {
     unsigned int requiredCount = us/10;
     
-    timerHit = false;
+    timerHit = 0;
     
     count = 0;
     
@@ -59,12 +63,12 @@ void delay_us(unsigned int us) {
     TMR0IF=0;       // Clear timer interrupt flag
     
     
-    while(count < requiredCount) NOP();
+    while(count < 100) NOP();
         
     TMR0IE = 0;
     GIE = 0;
     
-    timerHit = true;
+    timerHit = 0xff;
     H1OUT = 0;
 }
 
@@ -80,8 +84,11 @@ int main(void) {
     while(1) {
         // Change pitch
         
-        if(SW2 == 0) {
+        /*if(SW2 == 0) {
             for(int i = 0; i < NOTES_LENGTH; i++) {
+                if(notes[i].period == 0) {
+                    
+                }
                 for(unsigned long repeats = notes[i].time / notes[i].period; repeats != 0; repeats--) {
                     BEEPER = !BEEPER;
                     delay_us(notes[i].period);
@@ -90,7 +97,13 @@ int main(void) {
                     RESET();
                 }
             }
-        }
+            
+        } else {
+            LATC = 0;
+        }*/
+        
+        delay_us(1000);
+        LATC = ~LATC;
         
 //        if(SW2 == 0) {
 //            for(unsigned long repeats = 100; repeats != 0; repeats--) {

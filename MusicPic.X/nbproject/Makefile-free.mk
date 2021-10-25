@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=UBMP4.c Main.c
+SOURCEFILES_QUOTED_IF_SPACED=UBMP4.c Main.c timing_function_is_assembly.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/UBMP4.p1 ${OBJECTDIR}/Main.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/UBMP4.p1.d ${OBJECTDIR}/Main.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/UBMP4.p1 ${OBJECTDIR}/Main.p1 ${OBJECTDIR}/timing_function_is_assembly.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/UBMP4.p1.d ${OBJECTDIR}/Main.p1.d ${OBJECTDIR}/timing_function_is_assembly.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/UBMP4.p1 ${OBJECTDIR}/Main.p1
+OBJECTFILES=${OBJECTDIR}/UBMP4.p1 ${OBJECTDIR}/Main.p1 ${OBJECTDIR}/timing_function_is_assembly.o
 
 # Source Files
-SOURCEFILES=UBMP4.c Main.c
+SOURCEFILES=UBMP4.c Main.c timing_function_is_assembly.s
 
 
 
@@ -132,7 +132,23 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/timing_function_is_assembly.o: timing_function_is_assembly.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timing_function_is_assembly.o.d 
+	@${RM} ${OBJECTDIR}/timing_function_is_assembly.o 
+	${MP_CC} -c $(MP_EXTRA_AS_PRE) -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -mrom=default,-0-07FF -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -mext=cci -Wa,-a -DXPRJ_free=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file -mcodeoffset=800  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -std=c99 -gdwarf-3 -mstack=compiled:auto:auto   -o ${OBJECTDIR}/timing_function_is_assembly.o  timing_function_is_assembly.s 
+	@-${MV} ${OBJECTDIR}/timing_function_is_assembly.d ${OBJECTDIR}/timing_function_is_assembly.o.d 
+	@${FIXDEPS} ${OBJECTDIR}/timing_function_is_assembly.o.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
+${OBJECTDIR}/timing_function_is_assembly.o: timing_function_is_assembly.s  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timing_function_is_assembly.o.d 
+	@${RM} ${OBJECTDIR}/timing_function_is_assembly.o 
+	${MP_CC} -c $(MP_EXTRA_AS_PRE) -mcpu=$(MP_PROCESSOR_OPTION)   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -mrom=default,-0-07FF -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -mext=cci -Wa,-a -DXPRJ_free=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file -mcodeoffset=800  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -std=c99 -gdwarf-3 -mstack=compiled:auto:auto   -o ${OBJECTDIR}/timing_function_is_assembly.o  timing_function_is_assembly.s 
+	@-${MV} ${OBJECTDIR}/timing_function_is_assembly.d ${OBJECTDIR}/timing_function_is_assembly.o.d 
+	@${FIXDEPS} ${OBJECTDIR}/timing_function_is_assembly.o.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 endif
 
 # ------------------------------------------------------------------------------------
