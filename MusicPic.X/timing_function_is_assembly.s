@@ -26,6 +26,7 @@ _timer_function:
     return
     
 timer_yes:
+    bcf LATC,5
     btfsc INTCON,1 ; TMR0IF
     goto timer_more_yes
     return

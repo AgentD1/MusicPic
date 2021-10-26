@@ -117,6 +117,7 @@ const unsigned int NOTE_GS8 = 150;
 const unsigned int NOTE_A8 = 142;
 const unsigned int NOTE_AS8 = 134;
 const unsigned int NOTE_B8 = 127;
+const unsigned int REST = 0;
 
 
 // TODO Insert declarations
